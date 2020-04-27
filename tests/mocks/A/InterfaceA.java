@@ -1,5 +1,9 @@
 package mocks.A;
 
-public interface InterfaceA {
+import mocks.B.InterfaceB;
+import mocks.C.InterfaceC;
 
+public interface InterfaceA {
+    InterfaceB getInterfaceB();
+    InterfaceC getInterfaceC();
 }
