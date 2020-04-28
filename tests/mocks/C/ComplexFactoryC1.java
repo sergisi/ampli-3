@@ -2,9 +2,9 @@ package mocks.C;
 
 import common.DependencyException;
 
-public class ComplexFactoryC1 implements complex.Factory<InterfaceC>{
+public class ComplexFactoryC1 implements complex.Factory<ImplementationC1>{
     @Override
-    public InterfaceC create(Object... parameters) throws DependencyException {
+    public ImplementationC1 create(Object... parameters) throws DependencyException {
         String s;
         try{
             s = (String) parameters[0];

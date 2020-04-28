@@ -3,9 +3,9 @@ package mocks.B;
 import common.DependencyException;
 import mocks.D.InterfaceD;
 
-public class ComplexFactoryB1 implements complex.Factory<InterfaceB> {
+public class ComplexFactoryB1 implements complex.Factory<ImplementationB1> {
     @Override
-    public InterfaceB create(Object... parameters) throws DependencyException {
+    public ImplementationB1 create(Object... parameters) throws DependencyException {
         InterfaceD d;
         try {
             d = (InterfaceD) parameters[0];
