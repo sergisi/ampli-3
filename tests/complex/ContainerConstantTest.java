@@ -16,7 +16,7 @@ public class ContainerConstantTest {
     }
 
     @Test
-    void testConstant() throws DependencyException {
+    void testComplexConstant() throws DependencyException {
         Integer value = 3;
         injector.registerConstant(Integer.class, value);
         InterfaceD obj = injector.getObject(InterfaceD.class);
@@ -25,6 +25,17 @@ public class ContainerConstantTest {
 
         assertSame(obj , injector.getObject(InterfaceD.class));
         assertEquals(value ,d1.getInt());
+    }
+    @Test
+    void testComplexConstant2() throws DependencyException {
+        Integer value = 3;
+        injector.registerConstant(Integer.class, value);
+        Integer obj = injector.getObject(Integer.class);
+        assertTrue(obj instanceof Integer); //Revisar
+        Integer v = obj;
+
+        assertEquals(value, v);
+        assertSame(value, v);
     }
 
 }
