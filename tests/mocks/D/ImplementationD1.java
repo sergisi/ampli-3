@@ -26,4 +26,11 @@ public class ImplementationD1 implements InterfaceD{
     public int hashCode() {
         return Objects.hash(i);
     }
+
+    @Override
+    public String toString() {
+        return "ImplementationD1{" +
+                "i=" + i +
+                '}';
+    }
 }
