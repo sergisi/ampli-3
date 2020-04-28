@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ContainerFactoryTest {
-    imple.Injector injector;
+    simple.Injector injector;
     @BeforeEach
     void setUp() throws DependencyException {
         injector = new Container();
