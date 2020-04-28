@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class FactoryTest {
+public class ContainerFactoryTest {
     complex.Injector injector;
 
     @BeforeEach
