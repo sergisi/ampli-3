@@ -27,4 +27,13 @@ public class ContainerSingletonTest {
         assertSame(d1, injector.getObject("A"));
         assertEquals(d1, new ComplexFactoryD1().create("abbba"));
     }
+
+
+    @Test
+    void testNoRepeatedKeys() throws DependencyException {
+        Throwable exception = assertThrows(DependencyException.class, () -> {
+            injector.registerSingleton("A", new ComplexFactoryD1(), "I");
+        });
+        assertEquals("Key was already registered", exception.getMessage());
+    }
 }

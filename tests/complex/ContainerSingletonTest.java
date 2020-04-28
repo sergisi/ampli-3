@@ -9,6 +9,7 @@ import mocks.D.ImplementationD1;
 import mocks.D.InterfaceD;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.common.DataProcessingException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,5 +31,13 @@ public class ContainerSingletonTest {
         ImplementationD1 d1 = (ImplementationD1) obj;
         assertSame(d1, injector.getObject(InterfaceD.class));
         assertEquals(d1, new ComplexFactoryD1().create("abbba"));
+    }
+
+    @Test
+    void testNoRepeatedKeys() throws DependencyException {
+        Throwable exception = assertThrows(DependencyException.class, () -> {
+            injector.registerSingleton(InterfaceD.class, new ComplexFactoryD1(), String.class);
+        });
+        assertEquals("Key was already registered", exception.getMessage());
     }
 }
