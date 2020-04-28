@@ -12,12 +12,12 @@ public class Container implements Injector {
     }
 
     @Override
-    public void registerFactory(String name, Factory creator, Object... parameters) throws DependencyException {
+    public void registerFactory(String name, Factory creator, String... parameters) throws DependencyException {
 
     }
 
     @Override
-    public void registerSingleton(String name, Factory creator, Object... parameters) throws DependencyException {
+    public void registerSingleton(String name, Factory creator, String... parameters) throws DependencyException {
 
     }
 
