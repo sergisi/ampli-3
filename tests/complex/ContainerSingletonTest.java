@@ -16,15 +16,15 @@ public class ContainerSingletonTest {
     complex.Injector injector;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws DependencyException {
         injector = new Container();
+        injector.registerConstant(String.class, "abbba");
+        injector.registerSingleton(InterfaceD.class, new ComplexFactoryD1(), String.class);
     }
 
 
     @Test
     void testSingleton() throws DependencyException {
-        injector.registerConstant(String.class, "abbba");
-        injector.registerSingleton(InterfaceD.class, new ComplexFactoryD1(), String.class);
         InterfaceD obj = injector.getObject(InterfaceD.class);
         assertTrue(obj instanceof ImplementationD1);
         ImplementationD1 d1 = (ImplementationD1) obj;

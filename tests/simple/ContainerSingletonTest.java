@@ -12,14 +12,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ContainerSingletonTest {
     simple.Injector injector;
     @BeforeEach
-    void setUp() {
+    void setUp() throws DependencyException {
         injector = new Container();
+        injector.registerConstant("I", "abbba");
+        injector.registerSingleton("A", new ComplexFactoryD1(), "I");
     }
 
     @Test
     void testSingletonSimple() throws DependencyException {
-        injector.registerConstant("I", "abbba");
-        injector.registerSingleton("A", new ComplexFactoryD1(), "I");
         Object obj = injector.getObject("A");
         assertTrue(obj instanceof InterfaceD);
         assertTrue(obj instanceof ImplementationD1);
