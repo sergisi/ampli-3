@@ -17,11 +17,13 @@ public class ContainerConstantTest {
 
     @Test
     void testConstant() throws DependencyException {
-        int value = 3;
+        Integer value = 3;
         injector.registerConstant(Integer.class, value);
         InterfaceD obj = injector.getObject(InterfaceD.class);
         assertTrue(obj instanceof ImplementationD1);
         ImplementationD1 d1 = (ImplementationD1) obj;
+
+        assertSame(obj , injector.getObject(InterfaceD.class));
         assertEquals(value ,d1.getInt());
     }
 
