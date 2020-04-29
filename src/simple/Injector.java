@@ -1,9 +1,6 @@
 package simple;
 
 import common.DependencyException;
-import complex.Factory;
-
-import java.util.Objects;
 
 public interface Injector {
 
