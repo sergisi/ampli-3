@@ -1,6 +1,9 @@
 package simple;
 
 import common.DependencyException;
+import mocks.A.SimpleFactoryA1;
+import mocks.B.SimpleFactoryB1;
+import mocks.C.SimpleFactoryC1;
 import simple.Container;
 import mocks.A.ComplexFactoryA1;
 import mocks.A.ImplementationA1;
@@ -15,6 +18,8 @@ import mocks.D.ImplementationD1;
 import mocks.D.InterfaceD;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -25,10 +30,10 @@ class ContainerTest {
     void setUp() throws DependencyException {
         injector = new Container();
         injector.registerConstant("D", new ImplementationD1(42));
-        injector.registerFactory("C", new ComplexFactoryC1(), "S");
+        injector.registerFactory("C", new SimpleFactoryC1(), "S");
         injector.registerConstant("S", "ABBA");  // TODO: This also checks lazy evaluation. Is it Correct thought?
-        injector.registerSingleton("B", new ComplexFactoryB1(), "D");
-        injector.registerFactory("A", new ComplexFactoryA1(), "B", "C");
+        injector.registerSingleton("B", new SimpleFactoryB1(), "D");
+        injector.registerFactory("A", new SimpleFactoryA1(), "B", "C");
     }
 
 
@@ -70,17 +75,18 @@ class ContainerTest {
 
     @Test
     void testAlreadyRegistered() {
-        Throwable throwable = assertThrows(DependencyException.class, () -> {
-            injector.registerSingleton("C", new ComplexFactoryC1(), "S");
-        });
+        Throwable throwable = assertThrows(DependencyException.class,
+                () -> injector.registerSingleton("C", new SimpleFactoryC1(), "S"));
         assertEquals("Key was already registered", throwable.getMessage());
     }
 
     @Test
     void testGetObjectOfANotRegisteredClass() {
-        Throwable throwable = assertThrows(DependencyException.class, () -> {
-            injector.getObject("I");
-        });
+        Throwable throwable = assertThrows(DependencyException.class,
+                () -> injector.getObject("I"));
         assertEquals("Key is not registered", throwable.getMessage());
+    }
+
+    void checkTypes() {
     }
 }
