@@ -15,6 +15,8 @@ import mocks.D.ImplementationD1;
 import mocks.D.InterfaceD;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -82,5 +84,8 @@ class ContainerTest {
             injector.getObject("I");
         });
         assertEquals("Key is not registered", throwable.getMessage());
+    }
+
+    void checkTypes() {
     }
 }

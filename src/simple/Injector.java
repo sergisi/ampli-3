@@ -12,5 +12,5 @@ public interface Injector {
                              String... parameters) throws DependencyException;
     void registerSingleton(String name, Factory creator,
                                String... parameters) throws DependencyException;
-    Objects getObject(String name) throws DependencyException;
+    Object getObject(String name) throws DependencyException;
 }

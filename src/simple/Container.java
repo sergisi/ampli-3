@@ -22,7 +22,7 @@ public class Container implements Injector {
     }
 
     @Override
-    public Objects getObject(String name) throws DependencyException {
+    public Object getObject(String name) throws DependencyException {
         return null;
     }
 }
