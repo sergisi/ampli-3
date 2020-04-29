@@ -1,24 +1,18 @@
 package simple;
 
 import common.DependencyException;
-import mocks.A.SimpleFactoryA1;
-import mocks.B.SimpleFactoryB1;
-import mocks.C.SimpleFactoryC1;
-import simple.Container;
-import mocks.A.ComplexFactoryA1;
 import mocks.A.ImplementationA1;
 import mocks.A.InterfaceA;
-import mocks.B.ComplexFactoryB1;
+import mocks.A.SimpleFactoryA1;
 import mocks.B.ImplementationB1;
 import mocks.B.InterfaceB;
-import mocks.C.ComplexFactoryC1;
+import mocks.B.SimpleFactoryB1;
 import mocks.C.ImplementationC1;
 import mocks.C.InterfaceC;
+import mocks.C.SimpleFactoryC1;
 import mocks.D.ImplementationD1;
 import mocks.D.InterfaceD;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -87,6 +81,4 @@ class ContainerTest {
         assertEquals("Key is not registered", throwable.getMessage());
     }
 
-    void checkTypes() {
-    }
 }
