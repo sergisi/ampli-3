@@ -21,12 +21,12 @@ public class ContainerFactoryTest {
 
     @Test
     void testFactory() throws DependencyException {
-        injector.registerConstant(String.class, "abbba");
-        injector.registerFactory(InterfaceD.class, new ComplexFactoryD1(), String.class);
+        injector.registerConstant(Integer.class, 2);
+        injector.registerFactory(InterfaceD.class, new ComplexFactoryD1(), Integer.class);
         InterfaceD obj = injector.getObject(InterfaceD.class);
         assertTrue(obj instanceof ImplementationD1);
         ImplementationD1 d1 = (ImplementationD1) obj;
         assertNotSame(d1, injector.getObject(InterfaceD.class));
-        assertEquals(d1, new ComplexFactoryD1().create("abbba"));
+        assertEquals(d1, new ComplexFactoryD1().create(2));
     }
 }
