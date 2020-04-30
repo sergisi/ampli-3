@@ -31,7 +31,7 @@ public class ContainerSingletonTest {
 
 
     @Test
-    void testNoRepeatedKeys() throws DependencyException {
+    void testNoRepeatedKeys() {
         Throwable exception = assertThrows(DependencyException.class,
                 () -> injector.registerSingleton("A", new SimpleFactoryD1(), "I"));
         assertEquals("Key was already registered", exception.getMessage());

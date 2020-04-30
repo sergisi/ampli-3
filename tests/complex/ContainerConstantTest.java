@@ -32,10 +32,9 @@ public class ContainerConstantTest {
         Integer value = 3;
         injector.registerConstant(Integer.class, value);
         Integer obj = injector.getObject(Integer.class);
-        assertTrue(obj instanceof Integer); //Revisar
-        Integer v = obj;
-        assertEquals(value, v);
-        assertSame(value, v);
+        assertNotNull(obj);
+        assertEquals(value, obj);
+        assertSame(value, obj);
     }
 
 }

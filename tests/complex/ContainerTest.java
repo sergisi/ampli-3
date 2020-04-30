@@ -27,7 +27,8 @@ class ContainerTest {
         injector = new Container();
         injector.registerConstant(InterfaceD.class, new ImplementationD1(42));
         injector.registerFactory(InterfaceC.class, new ComplexFactoryC1(), String.class);
-        injector.registerConstant(String.class, "ABBA");  // TODO: This also checks lazy evaluation. Is it Correct thought?
+        injector.registerConstant(String.class, "ABBA");
+        // Note: This also checks lazy evaluation, as we wanted it.
         injector.registerSingleton(InterfaceB.class, new ComplexFactoryB1(), InterfaceD.class);
         injector.registerFactory(InterfaceA.class, new ComplexFactoryA1(), InterfaceB.class, InterfaceC.class);
     }
@@ -62,17 +63,15 @@ class ContainerTest {
 
     @Test
     void testAlreadyRegistered() {
-        Throwable throwable = assertThrows(DependencyException.class, () -> {
-            injector.registerSingleton(InterfaceC.class, new ComplexFactoryC1(), String.class);
-        });
+        Throwable throwable = assertThrows(DependencyException.class,
+                () -> injector.registerSingleton(InterfaceC.class, new ComplexFactoryC1(), String.class));
         assertEquals("Key was already registered", throwable.getMessage());
     }
 
     @Test
     void testGetObjectOfANotRegisteredClass() {
-        Throwable throwable = assertThrows(DependencyException.class, () -> {
-            injector.getObject(Integer.class);
-        });
+        Throwable throwable = assertThrows(DependencyException.class,
+                () -> injector.getObject(Integer.class));
         assertEquals("Key is not registered", throwable.getMessage());
     }
 }
