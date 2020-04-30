@@ -37,6 +37,8 @@ de vegades, es retornarà el mateix.
 %TODO Es va utilitzar una clase anònima en comptes d'una lambda perque podia mantenir l'estat de diferents crides
 %TODO El calcul del singuelton només es fa quan es demana per primer cop, no quan es registre.
 \subsection{Dificultats}
+Es volia realitzar el \texttt{getObjects} com un \texttt{map} de \texttt{getObjects}, però el mètode llança exceptions
+quan no es troba la dependència, pel que no s'ha pogut realitzar.
 %TODO al no poder fer els throws dins del map es van haver de fer apart a la funció getObjects
 
 \end{document}
