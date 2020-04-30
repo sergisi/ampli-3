@@ -12,10 +12,10 @@ ser que un \texttt{Factory} necessites tornar sempre elements diferents per un c
 \texttt{Factory} que crea noves identificacions pels clients que la utilitzen.\\
 \\
 Descartant la possibilitat de guardar valors instanciats només quedava guardar funcions. La idea és utilitzar una
-funció del tipus \texttt{Set k -> a} (en notació similar a Haskell) per a extreure
-la idea de constant, \texttt{Singleton} i \texttt{Factory}. Aquesta funció rebra per parametre un Set que contindrà totes les dependencies que s'hauran anat injectant a mesura que s'executa el programa. Un cop s'intenti inserir una dependencia que ja es troba dins del set, es llençarà una excepció.\\
+funció del tipus \texttt{() -> a} (en notació similar a Haskell) per a extreure
+la idea de constant, \texttt{Singleton} i \texttt{Factory}.\\
 \\
-A més a més, s'ha optat per fer una altra interfície per a fer-ho, que s'ha anomenat \texttt{FunctionToObject}. Realment
+A més a més, s'ha optat per fer una altra interfície per a fer-ho, que s'ha anomenat \texttt{FunctionUnitToObject}. Realment
 es podia haver utilitzat la interfície de \texttt{Factory} donada, però s'ha cregut que era més costós d'entendre que 
 guardava el Map, pel que es va optar per fer una interfície a part.
 %TODO Si fos una instancia d'objecte llavors Factory no es podira implementar perque tornariem sempre el mateix objecte
@@ -37,7 +37,6 @@ de vegades, es retornarà el mateix.
 %TODO Es va utilitzar una clase anònima en comptes d'una lambda perque podia mantenir l'estat de diferents crides
 %TODO El calcul del singuelton només es fa quan es demana per primer cop, no quan es registre.
 \subsection{Dificultats}
-Es volia realitzar el \texttt{getObjects} com un \texttt{map} de \texttt{getObjects}, però el mètode llança exceptions
-quan no es troba la dependència, pel que no s'ha pogut realitzar.
 %TODO al no poder fer els throws dins del map es van haver de fer apart a la funció getObjects
+
 \end{document}
