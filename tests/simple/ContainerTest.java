@@ -25,7 +25,8 @@ class ContainerTest {
         injector = new Container();
         injector.registerConstant("D", new ImplementationD1(42));
         injector.registerFactory("C", new SimpleFactoryC1(), "S");
-        injector.registerConstant("S", "ABBA");  // TODO: This also checks lazy evaluation. Is it Correct thought?
+        injector.registerConstant("S", "ABBA");
+        // Note: This checks lazy evaluation.
         injector.registerSingleton("B", new SimpleFactoryB1(), "D");
         injector.registerFactory("A", new SimpleFactoryA1(), "B", "C");
     }
