@@ -30,10 +30,9 @@ public class ContainerSingletonTest {
     }
 
     @Test
-    void testNoRepeatedKeys() throws DependencyException {
-        Throwable exception = assertThrows(DependencyException.class, () -> {
-            injector.registerSingleton(InterfaceD.class, new ComplexFactoryD1(), String.class);
-        });
+    void testNoRepeatedKeys() {
+        Throwable exception = assertThrows(DependencyException.class,
+                () -> injector.registerSingleton(InterfaceD.class, new ComplexFactoryD1(), String.class));
         assertEquals("Key was already registered", exception.getMessage());
     }
 }

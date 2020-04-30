@@ -1,43 +1,46 @@
 package complex;
 
 import common.DependencyException;
-import common.FunctionUnitToObject;
+import common.FunctionToObject;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
-import java.util.stream.Stream;
+import java.util.Set;
 
 public class Container implements Injector {
 
-    private Map<Class<?>, FunctionUnitToObject> map;
+    private final Map<Class<?>, FunctionToObject<Class<?>>> map;
 
     public Container() {
         map = new HashMap<>();
     }
 
     @Override
-    public <E> void registerConstant(Class<E> name, E value) throws DependencyException {
+    public <E> void registerConstant(@NotNull Class<E> name, @NotNull E value) throws DependencyException {
         containsKey(map.containsKey(name));
-        map.put(name, () -> value);
+        map.put(name, (dependencies) -> value);
     }
 
 
     @Override
-    public <E> void registerFactory(Class<E> name, Factory<? extends E> creator, Class<?>... parameters) throws DependencyException {
+    public <E> void registerFactory(@NotNull Class<E> name, @NotNull Factory<? extends E> creator,
+                                    Class<?>... parameters) throws DependencyException {
         containsKey(map.containsKey(name));
-        map.put(name, () -> creator.create(getObjects(parameters)));
+        map.put(name, (dependencies) -> creator.create(getObjects(parameters, dependencies)));
     }
 
     @Override
-    public <E> void registerSingleton(Class<E> name, Factory<? extends E> creator, Class<?>... parameters) throws DependencyException {
+    public <E> void registerSingleton(@NotNull Class<E> name, @NotNull Factory<? extends E> creator,
+                                      Class<?>... parameters) throws DependencyException {
         containsKey(map.containsKey(name));
-        map.put(name, new FunctionUnitToObject() {
+        map.put(name, new FunctionToObject<>() {
             Object object = null;
             @Override
-            public Object create() throws DependencyException {
+            public Object create(Set<Class<?>> dependencies) throws DependencyException {
                 if (object == null) {
-                    object = creator.create(getObjects(parameters));
+                    object = creator.create(getObjects(parameters, dependencies));
                 }
                 return object;
             }
@@ -45,12 +48,21 @@ public class Container implements Injector {
     }
 
     @Override
-    @SuppressWarnings(value = "unchecked")
-    public <E> E getObject(Class<E> name) throws DependencyException {
+    public <E> E getObject(@NotNull Class<E> name) throws DependencyException {
+        return getObject(name, new HashSet<>());
+    }
+
+    @SuppressWarnings("unchecked")
+    private <E> E getObject(Class<E> name, Set<Class<?>> parameters) throws DependencyException {
         if (!map.containsKey(name)) {
             throw new DependencyException("Key is not registered");
         }
-        return (E) map.get(name).create();
+        if (parameters.contains(name)) {
+            throw new DependencyException("Key has a dependency cycle:" + name.toString() + parameters.toString());
+        }
+        HashSet<Class<?>> set = new HashSet<>(parameters);
+        set.add(name);
+        return (E) map.get(name).create(set);
     }
 
     private void containsKey(boolean b) throws DependencyException {
@@ -59,10 +71,10 @@ public class Container implements Injector {
         }
     }
 
-    private Object[] getObjects(Class<?>[] parameters) throws DependencyException {
+    private Object[] getObjects(Class<?>[] parameters, Set<Class<?>> dependencies) throws DependencyException {
         Object[] result = new Object[parameters.length];
         for (int i = 0; i < parameters.length; i++) {
-            result[i] = getObject(parameters[i]);
+            result[i] = getObject(parameters[i], dependencies);
         }
         return result;
     }

@@ -92,3 +92,29 @@ fabric.properties
 
 # End of https://www.gitignore.io/api/intellij
 /.idea/
+/doc/doc.aux
+/doc/doc.fls
+/doc/doc.fdb_latexmk
+/doc/doc.log
+/doc/doc.out
+/doc/doc.pdf
+/doc/doc.synctex.gz
+/doc/doc.toc
+/doc/conc/conc.aux
+/doc/conc/conc.fdb_latexmk
+/doc/conc/conc.fls
+/doc/conc/conc.log
+/doc/conc/conc.pdf
+/doc/conc/conc.synctex.gz
+/doc/intro/intro.aux
+/doc/intro/intro.fdb_latexmk
+/doc/intro/intro.log
+/doc/intro/intro.fls
+/doc/intro/intro.pdf
+/doc/intro/intro.synctex.gz
+/doc/part1/part1.aux
+/doc/part1/part1.fdb_latexmk
+/doc/part1/part1.fls
+/doc/part1/part1.log
+/doc/part1/part1.pdf
+/doc/part1/part1.synctex.gz

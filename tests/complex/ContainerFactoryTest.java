@@ -1,8 +1,6 @@
 package complex;
+
 import common.DependencyException;
-import mocks.B.ImplementationB1;
-import mocks.C.ComplexFactoryC1;
-import mocks.C.InterfaceC;
 import mocks.D.ComplexFactoryD1;
 import mocks.D.ImplementationD1;
 import mocks.D.InterfaceD;

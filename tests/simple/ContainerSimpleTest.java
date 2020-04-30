@@ -1,12 +1,8 @@
 package simple;
 
 import common.DependencyException;
-import mocks.D.ImplementationD1;
-import mocks.D.InterfaceD;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,10 +16,10 @@ public class ContainerSimpleTest {
 
     @Test
     void testSimpleConstant() throws DependencyException {
-        Integer value = Integer.valueOf(3);
+        Integer value = 3;
         injector.registerConstant("BBAA", value);
         Object obj = injector.getObject("BBAA");
-        assertTrue(obj instanceof Integer); //Revisar
+        assertTrue(obj instanceof Integer);
         assertEquals(value, obj);
         assertSame(value, obj);
     }
