@@ -17,15 +17,23 @@ la idea de constant, \texttt{Singleton} i \texttt{Factory}.\\
 \\
 A més a més, s'ha optat per fer una altra interfície per a fer-ho, que s'ha anomenat \texttt{FunctionUnitToObject}. Realment
 es podia haver utilitzat la interfície de \texttt{Factory} donada, però s'ha cregut que era més costós d'entendre que 
-guardava el Map.
+guardava el Map, pel que es va optar per fer una interfície a part.
 %TODO Si fos una instancia d'objecte llavors Factory no es podira implementar perque tornariem sempre el mateix objecte
 %TODO Per tant s'ha decidit implementar-ho com una funció 
 %TODO La funció és un Factory de zero parametres
 \subsection{Throwables}
 %TODO Es va interretar que haviem de llançar una exepció quan registravem un objecte i ja estava registrat i quan es treia un objecte que no estava registrat
 \subsection{Implementacions}
+Per objectiu propi, es va voler que les implementacions fossin mandroses. D'aquesta forma, sigui l'ordre que sigui quan
+es registrin les dependències, quan es resolgui el valor es retornarà el valor sempre que es pugui. Per a fer-ho es va
+crear el mètode \texttt{getObjects}, el qual tradueix en les crides a les classes les dades.
 %TODO Es va intentar que tots els calculs generals és fessin de forma mandrosa.
 \subsubsection{registerSingelton()}
+Els mètodes de constant i  \texttt{Factory} són trivials donat aquest disseny, però el mètode de \texttt{Singleton} s'ha
+hagut de realitzar de forma diferent. L'objectiu en el qual es volia arribar era que en el primer \texttt{getObject} es
+crea per primer cop la instància, però la resta de vegades no. Per a guardar aquest estat s'ha utilitzat una classe anònima,
+on existeix un objecte primerament instanciat a null. Quan es cridi per primer cop en el "get", es crearà l'objecte, la resta
+de vegades, es retornarà el mateix.
 %TODO Es va utilitzar una clase anònima en comptes d'una lambda perque podia mantenir l'estat de diferents crides
 %TODO El calcul del singuelton només es fa quan es demana per primer cop, no quan es registre.
 \subsection{Dificultats}
