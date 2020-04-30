@@ -3,8 +3,10 @@
 %TODO La interficie de injectors semblava un HashMap
 %TODO El problema que s'ens oferia era la decisió de clau valor
 %TODO Les claus són el que ens demanen a getObject
+Es va decidir utilitzar un Map ja que els métodes de la propia interfície d'injector portaven a pensar amb un HashMap en el qual es registren elements clau valor a traves dels métodes registerConstant, registerFactory i registerSingelton. I s'en consulten a traves d'una clau amb el mètode getObject.
 \subsubsection{Value}
 %TODO Si fos una instancia d'objecte llavors Factory no es podira implementar perque tornariem sempre el mateix objecte
+En quant als values del Map, es va  pensar en que si eren instancies d'un objecte 
 %TODO Per tant s'ha decidit implementar-ho com una funció 
 %TODO La funció és un Factory de zero parametres
 \subsection{Throwables}
