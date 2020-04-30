@@ -1,12 +1,29 @@
 \begin{document}
+	Els tests, tant per la implementació simple com per la complexa, s'ha realitzat amb el mateix esquema i els mateixos mocks.
+	Hem cregut convenient no posar interfícies per a lligar les dues implementacions dels tests, ja que es creu que només afegiria
+	una capa de complexitat als tests innecessària.
 \subsection{Mocks}
-%TODO S'han fet 4 mocks diferents per a poder testejar el funcionament correcte de l'injector.
-%TODO cada mock té la seva respectiva Interfície, implementació i Factories simple i complexa.
-Per tal de poder testejar el funcionament correcte de l'injector s'han implementat quatre mocks diferents. Cada un d'aquests compta amb la seva respectiva interfície i implementació i també amb les seves Factories, tant la simple com la complexa.
+% S'han fet 4 mocks diferents per a poder testejar el funcionament correcte de l'injector.
+% cada mock té la seva respectiva Interfície, implementació i Factories simple i complexa.
+Per tal de poder testejar el funcionament correcte de l'injector s'han implementat sis mocks diferents. 
+Cada un d'aquests compta amb la seva respectiva interfície i implementació i també amb les seves Factories, 
+tant la simple com la complexa.
 \subsection{Tests Especifics}
-%TODO S'han decidit implementar tests especifics per seguir les bones pràctiques, on donats errors especifics aquests es poden afegir ràpidament en una classe.
-La raó per la qual s'han decidit implementar testos específics és per seguir les bones pràctiques, donat el el cas que sorgeixin errors específics en el codi, es puguin afegir els testos ràpidament en una classe. Es tracta de les classes de test ContainerConstantTest, ContainerFactoryTest i ContainerSingeltonTest.
+%S'han decidit implementar tests especifics per seguir les bones pràctiques, on donats errors especifics aquests es poden afegir ràpidament en una classe.
+La raó per la qual s'ha fet tests específics per a cada mètode és en el cas de que un cop en producció, sorgeixi
+un error en un cas inesperat, es pugui incorporar aquest en una classe de tests per a aquest mètode sense haver-se
+de preocupar per la resta de mètodes de la classe.
+%Sergi: he llegit i ho he canviat la explicació de la raó. He seguit la maetixa estructura. Falta revisar-ho
+%La raó per la qual s'han decidit implementar testos específics és per seguir les bones pràctiques, 
+%donat en el cas que sorgeixin errors específics en el codi, es puguin afegir els testos ràpidament en 
+%una classe. 
+Es tracta de les classes de test \texttt{ContainerConstantTest}, \texttt{ContainerFactoryTest} i 
+\texttt{ContainerSingeltonTest} i \texttt{ContainerCycleTest}. Aquest últim realitza el test en el qual es veu
+si es desenvolupa correctament el tractament de dependències. Per a fer-ho, les implementacions E i F es necessiten
+una a l'altra.
 \subsection{Tests Generals}
-%TODO S'ha fet un test general per a veure que amb múltiples objectes registrats el programa es comporta correctament.
-Per altra banda, també s'ha fet una classe de test general per provar el funcionament de l'injector. Aquest ens permet veure que amb múltiples objectes registrats el programa es comporta correctament. Es tracta de la classe ContainerTest
+%S'ha fet un test general per a veure que amb múltiples objectes registrats el programa es comporta correctament.
+Per altra banda, també s'ha fet una classe de test general per provar el funcionament de l'injector. 
+Aquest ens permet veure que amb múltiples objectes diferents registrats el programa es comporta correctament.
+Es tracta de la classe ContainerTest
 \end{document}

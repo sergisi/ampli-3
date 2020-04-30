@@ -1,8 +1,10 @@
 \begin{document}
+	En aquest apartat, es detallarà les decisions que es van creure oportunes per a realitzar el patró i els requeriments
+	del treball.
 \subsection{Map}
-%TODO La interficie de injectors semblava un HashMap
-%TODO El problema que s'ens oferia era la decisió de clau valor
-%TODO Les claus són el que ens demanen a getObject
+%La interficie de injectors semblava un HashMap
+%El problema que s'ens oferia era la decisió de clau valor
+%Les claus són el que ens demanen a getObject
 Es va decidir utilitzar un Map, ja que els mètodes de la mateixa interfície d'injector portaven a pensar amb un Map. En aquest, existeix
 el mètode de "get" per una clau amb el mètode \texttt{getObject}, i tres mètodes per a afegir valors
 amb \texttt{registerConstant, registerFactory} i \texttt{registerSingleton}.
@@ -12,39 +14,55 @@ ser que un \texttt{Factory} necessites tornar sempre elements diferents per un c
 \texttt{Factory} que crea noves identificacions pels clients que la utilitzen.\\
 \\
 Descartant la possibilitat de guardar valors instanciats només quedava guardar funcions. La idea és utilitzar una
-funció del tipus \texttt{() ->;;; a} (en notació similar a Haskell) per a extreure
+funció del tipus \texttt{() -> a} (en notació similar a Haskell) per a extreure
 la idea de constant, \texttt{Singleton} i \texttt{Factory}.\\
 \\
-A més a més, s'ha optat per fer una altra interfície per a fer-ho, que s'ha anomenat \texttt{FunctionUnitToObject}. Realment
+A més a més, s'ha optat per fer una altra interfície per a fer-ho, que s'ha anomenat \texttt{FunctionObject}. Realment
 es podia haver utilitzat la interfície de \texttt{Factory} donada, però s'ha cregut que era més costós d'entendre que
-guardava el Map, pel que es va optar per fer una interfície a part.
-%TODO Si fos una instància d'objecte llavors Factory no es podira implementar perque tornariem sempre el mateix objecte
-%TODO Per tant s'ha decidit implementar-ho com una funció
-%TODO La funció és un Factory de zero parametres
+guardava el Map, pel que es va optar per fer una interfície a part. Finalment, per a implementar la detecció
+de cicles, es necessitava passar per parametre un conjunt per a controlar si un node ja s'havia visitat 
+amb anterioritat.
+% Si fos una instància d'objecte llavors Factory no es podira implementar perque tornariem sempre el mateix objecte
+%Per tant s'ha decidit implementar-ho com una funció
+%La funció és un Factory de zero parametres
 \subsection{Throwables}
 S'ha fet ús de l'excepció DependencyException pels casos mencionats a l'enunciat
 de la pràctica. El que val més la pena mencionar és el cas que preveu crear un objecte
-que forma un cicle de dependències.
-
-Per trobar el cicle de dependències s'utilitzarà un set, on s'afegiran
-les claus que s'han demanat quan es fa la crida a getObject. Si en un moment
+que forma un cicle de dependències.\\
+\\
+Per trobar el cicle de dependències s'utilitza un set, on s'afegeixen
+les claus que s'han demanat quan es fa la crida a \texttt{getObject}. Si en un moment
 donat es demana una clau que ja està al set voldrà dir que s'ha creat un cicle
 de dependències, i es llençarà l'excepció.
-%TODO Es va interretar que haviem de llançar una exepció quan registravem un objecte i ja estava registrat i quan es treia un objecte que no estava registrat
+%Es va interretar que haviem de llançar una exepció quan registravem un objecte i ja estava registrat i quan es treia un objecte que no estava registrat
 \subsection{Implementacions}
-Per objectiu propi, es va voler que les implementacions fossin mandroses. D'aquesta forma, sigui l'ordre que sigui quan
+Per requeriment del treball, s'han de fer les implementacions mandroses. D'aquesta forma, sigui l'ordre que sigui quan
 es registrin les dependències, quan es resolgui el valor es retornarà el valor sempre que es pugui. Per a fer-ho es va
-crear el mètode \texttt{getObjects}, el qual tradueix en les crides a les classes les dades.
-%TODO Es va intentar que tots els calculs generals és fessin de forma mandrosa.
+crear el mètode \texttt{getObjects}, el qual tradueix en les crides a les classes les dades. Amagar l'execució d'aquest
+dins d'una funció anònima, fa que el mètode s'executi només quan es reclama la instància amb \texttt{getObject},
+fent així una avaluació "mandrosa".
+% Es va intentar que tots els calculs generals és fessin de forma mandrosa.
 \subsubsection{registerSingelton()}
 Els mètodes de constant i \texttt{Factory} són trivials donat aquest disseny, però el mètode de \texttt{Singleton} s'ha
 hagut de realitzar de forma diferent. L'objectiu en el qual es volia arribar era que en el primer \texttt{getObject} es
-crea per primer cop la instància, però la resta de vegades no. Per a guardar aquest estat s'ha utilitzat una classe anònima,
-on existeix un objecte primerament instanciat a null. Quan es cridi per primer cop en el "get", es crearà l'objecte, la resta
-de vegades, es retornarà el mateix.
-%TODO Es va utilitzar una clase anònima en comptes d'una lambda perque podia mantenir l'estat de diferents crides
-%TODO El calcul del singuelton només es fa quan es demana per primer cop, no quan es registre.
+crea per la instància, però la resta de vegades no. Per a guardar aquest estat s'ha utilitzat una classe anònima,
+on existeix un objecte primerament instanciat a \texttt{null}. Quan es cridi per primer cop en el \texttt{getObject}, 
+es crearà l'objecte, la resta de vegades, es retornarà el mateix.
+%Es va utilitzar una clase anònima en comptes d'una lambda perque podia mantenir l'estat de diferents crides
+%El calcul del singuelton només es fa quan es demana per primer cop, no quan es registre.
 \subsection{Dificultats}
 %TODO al no poder fer els throws dins del map es van haver de fer apart a la funció getObjects
-
+%TODO no es va realitzar el primer cop la implementació de la detecció de cicles.
+En la realització d'aquesta pràctica s'han trobat diferents punts que han fet un canvi en el disseny primerament plantejat.
+El primer dels canvis que es va fer, va ser la decisió d'implementar \texttt{getObjects}. En la primera prova del disseny es
+va intentar fer-ho amb \textit{streams} i un \texttt{map}, però que aquest mètode pugues llançar errors feia impossible
+la implementació directe. Es podia haver amagat la implementació amb un \texttt{try-catch}, i retornant un Optional, però
+llavors es requeria d'un control addicional del mateix error, pel que es va creure oportú fer-ho amb un mètode que pogués
+llançar l'excepció tranquil·lament\\
+\\
+El segon cas, va ser causat per una mala lectura de l'enunciat, fet que va portar a no implementar la detecció del cicle de 
+dependències. Donat a que l'anterior disseny era robust, ajustar-se a aquest requeriment només es va necessitar canviar
+les classes de \texttt{Container}, i la classe \texttt{FunctionToObject} que compartient  entre elles. 
+Abans d'aquest canvi, \texttt{FunctionToObject} no requeria de paràmetres.
+no requeria 
 \end{document}
