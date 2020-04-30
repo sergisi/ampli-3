@@ -6,10 +6,6 @@
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
-<<<<<<< HEAD
-*.idea
- *.iml
-=======
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -96,4 +92,3 @@ fabric.properties
 
 # End of https://www.gitignore.io/api/intellij
 /.idea/
->>>>>>> 1020cc2a6ba909e3b003d2e991762b0e7a9d193b
