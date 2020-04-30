@@ -2,31 +2,34 @@ package simple;
 
 import common.DependencyException;
 import common.FunctionUnitToObject;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Container implements Injector {
-    Map<String, FunctionUnitToObject> map;
+    private final Map<String, FunctionUnitToObject> map;
 
     public Container() {
         map = new HashMap<>();
     }
 
     @Override
-    public void registerConstant(String name, Object value) throws DependencyException {
+    public void registerConstant(@NotNull String name, @NotNull Object value) throws DependencyException {
         containsKey(name);
         map.put(name, () -> value);
     }
 
     @Override
-    public void registerFactory(String name, Factory creator, String... parameters) throws DependencyException {
+    public void registerFactory(@NotNull String name,
+                                @NotNull Factory creator, String... parameters) throws DependencyException {
         containsKey(name);
         map.put(name, () -> creator.create(getObjects(parameters)));
     }
 
     @Override
-    public void registerSingleton(String name, Factory creator, String... parameters) throws DependencyException {
+    public void registerSingleton(@ NotNull String name,
+                                  @NotNull Factory creator, String... parameters) throws DependencyException {
         containsKey(name);
         map.put(name, new FunctionUnitToObject() {
             Object object = null;
@@ -41,7 +44,7 @@ public class Container implements Injector {
     }
 
     @Override
-    public Object getObject(String name) throws DependencyException {
+    public Object getObject(@NotNull String name) throws DependencyException {
         if (!map.containsKey(name)) {
             throw new DependencyException("Key is not registered");
         }
@@ -49,7 +52,7 @@ public class Container implements Injector {
 
     }
 
-    void containsKey(String name) throws DependencyException {
+    private void containsKey(String name) throws DependencyException {
         if (map.containsKey(name)) throw new DependencyException("Key was already registered");
     }
 

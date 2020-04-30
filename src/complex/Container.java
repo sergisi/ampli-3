@@ -2,35 +2,36 @@ package complex;
 
 import common.DependencyException;
 import common.FunctionUnitToObject;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public class Container implements Injector {
 
-    private Map<Class<?>, FunctionUnitToObject> map;
+    private final Map<Class<?>, FunctionUnitToObject> map;
 
     public Container() {
         map = new HashMap<>();
     }
 
     @Override
-    public <E> void registerConstant(Class<E> name, E value) throws DependencyException {
+    public <E> void registerConstant(@NotNull Class<E> name, @NotNull E value) throws DependencyException {
         containsKey(map.containsKey(name));
         map.put(name, () -> value);
     }
 
 
     @Override
-    public <E> void registerFactory(Class<E> name, Factory<? extends E> creator, Class<?>... parameters) throws DependencyException {
+    public <E> void registerFactory(@NotNull Class<E> name, @NotNull Factory<? extends E> creator,
+                                    Class<?>... parameters) throws DependencyException {
         containsKey(map.containsKey(name));
         map.put(name, () -> creator.create(getObjects(parameters)));
     }
 
     @Override
-    public <E> void registerSingleton(Class<E> name, Factory<? extends E> creator, Class<?>... parameters) throws DependencyException {
+    public <E> void registerSingleton(@NotNull Class<E> name, @NotNull Factory<? extends E> creator,
+                                      Class<?>... parameters) throws DependencyException {
         containsKey(map.containsKey(name));
         map.put(name, new FunctionUnitToObject() {
             Object object = null;
@@ -46,7 +47,7 @@ public class Container implements Injector {
 
     @Override
     @SuppressWarnings(value = "unchecked")
-    public <E> E getObject(Class<E> name) throws DependencyException {
+    public <E> E getObject(@NotNull Class<E> name) throws DependencyException {
         if (!map.containsKey(name)) {
             throw new DependencyException("Key is not registered");
         }
