@@ -3,10 +3,22 @@
 %TODO La interficie de injectors semblava un HashMap
 %TODO El problema que s'ens oferia era la decisió de clau valor
 %TODO Les claus són el que ens demanen a getObject
-Es va decidir utilitzar un Map ja que els métodes de la propia interfície d'injector portaven a pensar amb un HashMap en el qual es registren elements clau valor a traves dels métodes registerConstant, registerFactory i registerSingelton. I s'en consulten a traves d'una clau amb el mètode getObject.
+Es va decidir utilitzar un Map, ja que els mètodes de la mateixa interfície d'injector portaven a pensar amb un Map. En aquest, existeix
+el mètode de "get" per una clau amb el mètode \texttt{getObject}, i tres mètodes per a afegir valors 
+amb \texttt{registerConstant, registerFactory} i \texttt{registerSingleton}. 
 \subsubsection{Value}
+El problema que resta és el tipus de valor que es guardarà en el diccionari. No es podia guardar instàncies d'objecte, ja que podria
+ser que un \texttt{Factory} necessites tornar sempre elements diferents per un camp intern, com per exemple, una classe
+\texttt{Factory} que crea noves identificacions pels clients que la utilitzen.\\
+\\
+Descartant la possibilitat de guardar valors instanciats només quedava guardar funcions. La idea és utilitzar una
+funció del tipus \texttt{() -> a} (en notació similar a Haskell) per a extreure
+la idea de constant, \texttt{Singleton} i \texttt{Factory}.\\
+\\
+A més a més, s'ha optat per fer una altra interfície per a fer-ho, que s'ha anomenat \texttt{FunctionUnitToObject}. Realment
+es podia haver utilitzat la interfície de \texttt{Factory} donada, però s'ha cregut que era més costós d'entendre que 
+guardava el Map.
 %TODO Si fos una instancia d'objecte llavors Factory no es podira implementar perque tornariem sempre el mateix objecte
-En quant als values del Map, es va  pensar en que si eren instancies d'un objecte 
 %TODO Per tant s'ha decidit implementar-ho com una funció 
 %TODO La funció és un Factory de zero parametres
 \subsection{Throwables}
